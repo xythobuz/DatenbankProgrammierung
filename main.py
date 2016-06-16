@@ -35,6 +35,14 @@ class MainFrame(wx.Frame):
     def __init__(self, *args, **kwargs):
         wx.Frame.__init__(self, *args, **kwargs)
 
+        MenuBar = wx.MenuBar()
+        FileMenu = wx.Menu()
+        MenuBar.Append(FileMenu, "&File")
+        self.SetMenuBar(MenuBar)
+        item = FileMenu.Append(wx.ID_EXIT, text = "&Exit")
+        self.Bind(wx.EVT_MENU, self.OnQuit, item)
+        self.Bind(wx.EVT_CLOSE, self.OnQuit)
+
         sizer = wx.BoxSizer(wx.VERTICAL)
         self.table = wx.dataview.DataViewListCtrl(self)
         self.table.AppendTextColumn("ID", width = 25)
@@ -149,7 +157,7 @@ class MainFrame(wx.Frame):
         self.Show()
 
         if "test" in argv:
-            wx.FutureCall(1000, self.TestProcedure)
+            wx.FutureCall(500, self.TestProcedure)
 
     def TestProcedure(self):
         self.table.SelectRow(0)
@@ -330,8 +338,30 @@ class MainFrame(wx.Frame):
         self.endDate.SetValue(pydate2wxdate(date.today()))
         self.CheckReservationValidity(self)
 
+    def OnQuit(self, event):
+        self.Destroy()
+
+class MainApp(wx.App):
+    def __init__(self, *args, **kwargs):
+        wx.App.__init__(self, *args, **kwargs)
+        self.Bind(wx.EVT_ACTIVATE_APP, self.OnActivate)
+
+    def OnInit(self):
+        self.frame = MainFrame(parent = None, title = "Autoverleih - DaPro")
+        return True
+
+    def BringWindowToFront(self):
+        self.GetTopWindow().Raise()
+
+    def OnActivate(self, event):
+        if event.GetActive():
+            self.BringWindowToFront()
+        event.Skip()
+
+    def MacReopenApp(self):
+        self.BringWindowToFront()
+
 initialize()
-app = wx.App(False)
-frame = MainFrame(parent = None, title = "Autoverleih - DaPro")
+app = MainApp(False)
 app.MainLoop()
 
