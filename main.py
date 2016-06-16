@@ -301,6 +301,8 @@ class MainFrame(wx.Frame):
         return query.count() - count
 
     def OnComboBox(self, event):
+        if self.table.GetSelectedRow() != wx.NOT_FOUND:
+            self.table.UnselectRow(self.table.GetSelectedRow())
         session = Session()
         query = session.query(Automodell).outerjoin(Auto).outerjoin(Ausstattung, Automodell.ausstattungen)
         if self.comboBezeichnung.GetValue() != TEXT_BEZEICHNUNG:
