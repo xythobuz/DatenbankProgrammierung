@@ -361,7 +361,9 @@ class MainApp(wx.App):
     def MacReopenApp(self):
         self.BringWindowToFront()
 
-initialize()
+if initialize():
+    exit()
+
 app = MainApp(False)
 app.MainLoop()
 
