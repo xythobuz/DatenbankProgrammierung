@@ -117,10 +117,10 @@ def initialize():
               modell_id = 1)
     a5 = Auto(kennzeichen = "RV XY 246", kmstand = 19000,
               tuvtermin = date(2005, 04, 01), kaufdatum = date(2002, 05, 01),
-              modell_id = 1)
+              modell_id = 5)
     a6 = Auto(kennzeichen = "RV XY 247", kmstand = 21000,
               tuvtermin = date(2005, 04, 01), kaufdatum = date(2002, 05, 01),
-              modell_id = 1)
+              modell_id = 2)
     a7 = Auto(kennzeichen = "RV XY 248", kmstand = 35000,
               tuvtermin = date(2005, 04, 01), kaufdatum = date(2002, 05, 01),
               modell_id = 2)

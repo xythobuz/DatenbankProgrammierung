@@ -289,15 +289,14 @@ class MainFrame(wx.Frame):
         session.commit()
 
     def CheckForReservations(self, automodell_id, session):
-        query = session.query(Auto).filter_by(modell_id = automodell_id)
         count = 0
         startDate = wxdate2pydate(self.startDate.GetValue())
         endDate = wxdate2pydate(self.endDate.GetValue())
-        for a in query:
-            reservierungen = session.query(Reservierung).filter_by(modell_id = automodell_id)
-            for r in reservierungen:
-                if (r.beginn.date() <= endDate) and (r.ende.date() >= startDate):
-                    count += 1
+        reservierungen = session.query(Reservierung).filter_by(modell_id = automodell_id)
+        for r in reservierungen:
+            if (r.beginn.date() <= endDate) and (r.ende.date() >= startDate):
+                count += 1
+        query = session.query(Auto).filter_by(modell_id = automodell_id)
         return query.count() - count
 
     def OnComboBox(self, event):
