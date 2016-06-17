@@ -5,9 +5,7 @@ from datetime import date
 from db import Base, engine, Session, Autoart, Ausstattung, Automodell
 from db import Auto, Kunde, Fuehrerschein
 
-def initialize():
-    if not "initialize" in argv:
-        return False
+if (__name__ == "__main__") or ("initialize" in argv):
 
     print("Deleting old tables...")
     Base.metadata.drop_all(engine)
@@ -156,5 +154,5 @@ def initialize():
         a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14
     ])
     session.commit()
-    return True
+    exit()
 

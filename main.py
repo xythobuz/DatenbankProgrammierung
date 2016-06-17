@@ -7,7 +7,7 @@ from sys import argv
 from datetime import date
 from db import Session, Autoart, Ausstattung, Automodell
 from db import Auto, Kunde, Fuehrerschein, Reservierung
-from dataset import initialize
+import dataset
 import wx
 import wx.dataview
 
@@ -146,9 +146,9 @@ class MainFrame(wx.Frame):
         sizer.Add(self.status, 0, wx.EXPAND | wx.LEFT | wx.RIGHT | wx.BOTTOM, 5)
 
         session = Session()
-        dataset = session.query(Automodell).outerjoin(Auto).outerjoin(Ausstattung, Automodell.ausstattungen)
-        self.UpdateComboBoxes(dataset)
-        self.SetTable(dataset)
+        data = session.query(Automodell).outerjoin(Auto).outerjoin(Ausstattung, Automodell.ausstattungen)
+        self.UpdateComboBoxes(data)
+        self.SetTable(data)
         self.SetKunden(session)
         self.SetReservierungen(session)
         session.commit()
@@ -361,9 +361,6 @@ class MainApp(wx.App):
 
     def MacReopenApp(self):
         self.BringWindowToFront()
-
-if initialize():
-    exit()
 
 app = MainApp(False)
 app.MainLoop()
